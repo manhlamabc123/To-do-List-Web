@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -76,14 +77,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sample',
-        'HOST': '127.0.0.1',
+        'NAME': 'my_project',
+        'USER': 'hongtr',
+        'PASSWORD': 'Passforhongtrmysql@@0101',
+        'HOST': 'localhost',   
         'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': 'root',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
