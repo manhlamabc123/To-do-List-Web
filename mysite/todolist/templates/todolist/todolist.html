@@ -1,4 +1,9 @@
 {% extends "main/base.html" %}
+{%load static%}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/todolist.css' %}">
+{% endblock %}
 
 {% block title %}
     To Do List
