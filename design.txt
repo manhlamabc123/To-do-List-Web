@@ -1,17 +1,17 @@
 Life Management Project
 
 What I want this Web to do:
-- Resigter, Login, Logout
+- Register, Login, Logout
 - To Do List
 - Habit Tracking
-- Finacial Management
+- Financial Management
 
-Resigter, Login, Logout: Just normal stuffs
+Register, Login, Logout: Just normal stuffs
 
 To Do List:
 - Add, Delete, Update items
-- Items have: Name, Description, Deadline, Importantness
-- Auto sort list by Deadline and Importantness
+- Items have: Name, Description, Deadline, Priority
+- Auto sort list by Deadline and Priority
 
 Habit Tracking:
 - Add, Delete, Update habits
@@ -19,6 +19,8 @@ Habit Tracking:
 - If Counter > 21 then give it some sign for the user to know that "This has became a habit"
 - Some habits are Daily, some are Weekly, even Monthly. Even if Daily, does not mean "whole week"
 
-Finacial Management:
-- Add, Delete, Update Transition
-- Transitions have: Name, Value (+ or -), Catagory, Description, Date
+Financial Management:
+- Add, Delete, Update Transaction
+- Transactions have: Name, Value (+ or -), Category, Description, Date
+
+ER Diagram: https://drive.google.com/file/d/1NoJtMUVu6_N5Wm3q0CAM6PaL7j40XKNe/view?usp=sharing
