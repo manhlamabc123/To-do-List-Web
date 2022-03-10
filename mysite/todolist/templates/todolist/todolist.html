@@ -9,6 +9,12 @@
     To Do List
 {% endblock %}
 
+{% block sidenav %}
+    <a href="/profile">Profile</a>
+    <a href="/todolist">List 1</a>
+    <a href="/todolist">List 2</a>
+{% endblock %}
+
 {% block content %}
 <div class="row d-flex justify-content-center">
     <div class="col-md-12">
@@ -43,6 +49,10 @@
                 </perfect-scrollbar>
             </div>
             <div class="d-flex text-right card-footer"><input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button></div>
+        </div>
+        <div class="row justify-content-end">
+            <button type="button" class="btn btn-primary">New</button>
+            <button type="button" class="btn btn-danger">Delete</button>
         </div>
     </div>
 </div>
