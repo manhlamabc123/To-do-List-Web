@@ -8,6 +8,11 @@ class ToDoLists(models.Model):
     def __str__(self):
         return self.name
 
+    @staticmethod
+    def UserFirstList(user_id):
+        user_todolist = list(ToDoLists.objects.filter(user_id = user_id).order_by('id'))
+        return user_todolist[0]
+
 class Items(models.Model):
     
     class Priority(models.IntegerChoices):
