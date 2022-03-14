@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    To Do List
+{% endblock %}
+
+{% block sidenav %}
+    <a href="/profile">Profile</a>
+    {% for list in user_todolist.all %}
+        <a href="/todolist_{{list.name}}">{{list.name}}</a>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+<h2>Your To-do List had been deleted.</h2>
+{% endblock %}

@@ -1,3 +1,4 @@
+from re import L
 from django.shortcuts import redirect, render
 from todolist.models import ToDoLists
 
@@ -17,3 +18,15 @@ def create_new_todolist(response):
     new_todolist = ToDoLists(user_id = response.user.id, name = new_todolist_name)
     new_todolist.save()
     return redirect(f"/todolist_{new_todolist_name}")
+
+def delete_todolist(response, list_name):
+    delete_todolist = ToDoLists.objects.get(user_id = response.user.id, name = list_name)
+    delete_todolist.delete()
+    return redirect("/deleted_todolist")
+
+def deleted_todolist(response):
+    user_todolist = ToDoLists.objects.filter(user_id = response.user.id)
+    context = {
+        "user_todolist": user_todolist,
+    }
+    return render(response, "todolist/deleted_todolist.html", context)

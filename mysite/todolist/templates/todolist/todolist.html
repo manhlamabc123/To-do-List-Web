@@ -65,7 +65,11 @@
             <form action="/create_new_todolist">
                 <button type="submit" class="btn btn-primary">New</button>
             </form>
-            <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+        <div class="row justify-content-end">
+            <form action="/delete_todolist_{{now_todolist.name}}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </div>
     </div>
 </div>
