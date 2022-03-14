@@ -26,13 +26,36 @@ class ToDoLists(models.Model):
     @staticmethod
     def ListNameGenerator(response):
         user_todolist = list(ToDoLists.objects.filter(user_id = response.user.id))
+        if len(user_todolist) >= 5:
+            messages.error(response, f"You already have 5 To-do Lists. You cannot have more.")
+            return None
         new_list_name = f"NewList{len(user_todolist) + 1}"
         if ToDoLists.IsExistedTodolist(response.user.id, new_list_name):
             messages.error(response, f"Cannot create to-do list because {new_list_name} is already existed.")
             return None
         else:
-            messages.success(response, "Created Successfully! Please change your list's name.")
+            messages.success(response, f"{new_list_name} is created successfully! Please change your list's name.")
             return new_list_name
+
+    @staticmethod
+    def CreateNewToDoList(response, new_todolist_name):
+        new_todolist = ToDoLists(user_id = response.user.id, name = new_todolist_name)
+        new_todolist.save()
+        
+        return None
+
+    @staticmethod
+    def DeleteTodolist(response, user_id, current_list):
+        delete_todolist = ToDoLists.objects.get(user_id = user_id, name = current_list)
+        delete_todolist.delete()
+
+        user_todolist = list(ToDoLists.objects.filter(user_id = user_id))
+        if len(user_todolist) == 0:
+            new_list_name = ToDoLists.ListNameGenerator(response)
+            ToDoLists.CreateNewToDoList(response, new_list_name)
+            return new_list_name
+        
+        return None
 class Items(models.Model):
     
     class Priority(models.IntegerChoices):

@@ -15,15 +15,15 @@ def todolist(response, list_name):
 def create_new_todolist(response, list_name):
     new_todolist_name = ToDoLists.ListNameGenerator(response)
     if new_todolist_name != None:
-        new_todolist = ToDoLists(user_id = response.user.id, name = new_todolist_name)
-        new_todolist.save()
+        ToDoLists.CreateNewToDoList(response, new_todolist_name)
         return redirect(f"/todolist_{new_todolist_name}")
     else:
         return redirect(f"/todolist_{list_name}")
 
 def delete_todolist(response, list_name):
-    delete_todolist = ToDoLists.objects.get(user_id = response.user.id, name = list_name)
-    delete_todolist.delete()
+    new_list = ToDoLists.DeleteTodolist(response, response.user.id, list_name)
+    if new_list != None:
+        return redirect(f"/todolist_{new_list}")
     return redirect("/deleted_todolist")
 
 def deleted_todolist(response):
