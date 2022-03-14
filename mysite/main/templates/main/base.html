@@ -37,6 +37,14 @@
                 <div class="col-8">
                     <h1 class="mt-2">{% block page_title %}Life Management Website{% endblock %}</h1>
                     <hr class="mt-0 mb-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}" id="msg" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                     {% block content %}
                     {% endblock %}
                 </div>
