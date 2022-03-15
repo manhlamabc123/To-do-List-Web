@@ -9,6 +9,11 @@
     To Do List
 {% endblock %}
 
+{% block page_title %}
+    Your To-do Lists
+{% endblock %}
+
+
 {% block sidenav %}
     <a href="/profile">Profile</a>
     {% for list in user_todolist.all %}
