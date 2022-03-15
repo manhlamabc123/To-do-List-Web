@@ -26,7 +26,14 @@
     <div class="col-md-12">
         <div class="card-hover-shadow-2x mb-3 card">
             <div class="card-header-tab card-header">
-                <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;{{now_todolist.name}}</div>
+                <div 
+                    class="card-header-title font-size-lg text-capitalize font-weight-normal"
+                    hx-get="/clicked_todolist_name/"
+                    hx-trigger="click"
+                    hx-swap="outerHTML"
+                >
+                <i class="fa fa-tasks"></i>&nbsp;{{now_todolist.name}}
+                </div>
             </div>
             <div class="scroll-area-sm">
                 <perfect-scrollbar class="ps-show-limits">
