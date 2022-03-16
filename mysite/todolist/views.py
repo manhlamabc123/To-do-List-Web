@@ -34,24 +34,14 @@ def deleted_todolist(response):
     }
     return render(response, "todolist/deleted_todolist.html", context)
 
-def clicked_todolist_name(response):
-    replace_with = '''<div 
-                        class="card-header-title font-size-lg text-capitalize font-weight-normal"
-                    ><i class=\"fa fa-tasks\"></i>&nbsp;
-                        <form action=\"/edit_todolist_name\">\n
-                            <div class=\"input-group input-group-sm\">\n
-                                <input type=\"text\" class=\"form-control\" placeholder=\"New name\" name="new_name">\n
-                                <button 
-                                    class=\"btn btn-primary btn-sm\" 
-                                    type=\"button\"
-                                >Save</button>\n
-                            </div>\n
-                        </form>
-                    </div>'''
-    return HttpResponse(replace_with)
+def clicked_todolist_name(response, list_name):
+    now_todolist = ToDoLists.objects.get(name = list_name, user_id = response.user.id)
+    return render(response, "todolist/replace.html", {"now_todolist": now_todolist})
 
-def edit_todolist_name(response):
+def edit_todolist_name(response, list_name):
     if response.method == "POST":
         new_name = response.POST.get("new_name")
-        print(new_name)
-    return HttpResponse(new_name)
+        change_list = ToDoLists.objects.get(name = list_name, user_id = response.user.id)
+        change_list.name = new_name
+        change_list.save()
+    return redirect(f"/todolist_{new_name}/")

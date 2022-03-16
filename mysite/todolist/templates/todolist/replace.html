@@ -1,0 +1,10 @@
+<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+    <i class="fa fa-tasks"></i>&nbsp;
+    <form method="POST" action="/edit_todolist_name_{{now_todolist.name}}/">
+        {% csrf_token %}
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="New name" name="new_name">
+            <button class="btn btn-primary btn-sm" type="submit">Save</button>
+        </div>
+    </form>
+</div>
