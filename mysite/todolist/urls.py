@@ -8,4 +8,5 @@ urlpatterns = [
     path('deleted_todolist/', views.deleted_todolist),
     path('clicked_todolist_name_<str:list_name>/', views.clicked_todolist_name),
     path('edit_todolist_name_<str:list_name>/', views.edit_todolist_name),
+    path('check_todolist_name/', views.check_todolist_name),
 ]

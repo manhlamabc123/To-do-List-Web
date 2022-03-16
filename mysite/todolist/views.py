@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from todolist.models import ToDoLists
+import re
 
 # Create your views here.
 def todolist(response, list_name):
@@ -45,3 +46,20 @@ def edit_todolist_name(response, list_name):
         change_list.name = new_name
         change_list.save()
     return redirect(f"/todolist_{new_name}/")
+
+def check_for_special_character(string): 
+    special_character = ['~', ':', "'", '+', '[', '\\', '@', '^', '{', '%', '(', '-', '"', '*', '|', ',', '&', '<', '`', '}', '.', '_', '=', ']', '!', '>', ';', '?', '#', '$', ')', '/']
+    return any(ext in string for ext in special_character)
+
+def check_todolist_name(response):
+    if response.method == "POST":
+        new_name = response.POST.get("new_name")
+        todolist = list(ToDoLists.objects.filter(name = new_name, user_id = response.user.id))
+        if len(todolist) > 0:
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Name already existed</button>")
+        elif check_for_special_character(new_name):
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Contain special character</button>")
+        elif len(new_name) == 0:
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Please type something</button>")
+        else:
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-success btn-sm\" type=\"submit\">Save</button>")
