@@ -9,4 +9,5 @@ urlpatterns = [
     path('clicked_todolist_name_<str:list_name>/', views.clicked_todolist_name),
     path('edit_todolist_name_<str:list_name>/', views.edit_todolist_name),
     path('check_todolist_name/', views.check_todolist_name),
+    path('update_check_box_<str:list_name>_<int:item_id>/', views.update_check_box),
 ]

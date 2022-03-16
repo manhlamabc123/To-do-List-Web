@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from todolist.models import ToDoLists
+from todolist.models import ToDoLists, Items
 import re
 
 # Create your views here.
@@ -63,3 +63,14 @@ def check_todolist_name(response):
             return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Please type something</button>")
         else:
             return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-success btn-sm\" type=\"submit\">Save</button>")
+
+def update_check_box(response, list_name, item_id):
+    if response.method == "POST":
+        now_todolist = ToDoLists.objects.get(user_id = response.user.id, name = list_name)
+        now_item = Items.objects.get(todolist_id = now_todolist.id, id = item_id)
+        if response.POST.get(f"checkbox_{item_id}") == None:
+            now_item.complete = 0
+        else:
+            now_item.complete = 1
+        now_item.save()
+    return HttpResponse()
