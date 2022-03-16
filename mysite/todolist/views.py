@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -74,3 +75,22 @@ def update_check_box(response, list_name, item_id):
             now_item.complete = 1
         now_item.save()
     return HttpResponse()
+
+def check_item_name(response):
+    if response.method == "POST":
+        item_name = response.POST.get("new_item_name")
+        if check_for_special_character(item_name):
+            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Contain special character</button>")
+        elif len(item_name) > 30:
+            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Too long</button>")
+        elif len(item_name) == 0:
+            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Add</button>")
+        else:
+            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-primary font-weight-bold\" >Add</button>")
+
+def update_new_item(response, list_name):
+    if response.method == "POST":
+        now_todolist = ToDoLists.objects.get(user_id = response.user.id, name = list_name)
+        item = Items(name = response.POST.get("new_item_name"), todolist_id = now_todolist.id)
+        item.save()
+    return todolist(response, list_name)
