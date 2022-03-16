@@ -38,7 +38,7 @@
         <div class="scroll-area-sm">
             <perfect-scrollbar class="ps-show-limits">
                 <div style="position: static;" class="ps ps--active-y">
-                    <div class="ps-content">
+                    <div id="todolist_card" class="ps-content">
                         <form>
                             {% csrf_token %}
                             <ul class=" list-group list-group-flush">
@@ -76,8 +76,14 @@
                                                 <div class="widget-heading">{{item.name}}</div>
                                                 <!-- <div class="widget-subheading"><i>Description</i></div> -->
                                             </div>
-                                            <div class="widget-content-right"> 
-                                                <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> 
+                                            <div class="widget-content-right">
+                                                    <button 
+                                                    class="border-0 btn-transition btn btn-outline-danger" 
+                                                    hx-post="/delete_item_{{now_todolist.name}}_{{item.id}}/" 
+                                                    hx-trigger="click" 
+                                                    hx-target="#todolist_card" 
+                                                    hx-swap="outerHTML"
+                                                    > <i class="fa fa-trash"></i> </button> 
                                             </div>
                                         </div>
                                     </div>
