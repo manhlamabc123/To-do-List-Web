@@ -18,7 +18,7 @@
     <a href="/profile">Profile</a>
     <hr color="white">
     {% for list in user_todolist.all %}
-        <a href="/todolist_{{list.name}}">{{list.name}}</a>
+        <a href="/todolist_{{list.name}}">{{list.name.capitalize}}</a>
     {% endfor %}
 {% endblock %}
 
