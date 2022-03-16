@@ -36,7 +36,7 @@ def deleted_todolist(response):
 
 def clicked_todolist_name(response, list_name):
     now_todolist = ToDoLists.objects.get(name = list_name, user_id = response.user.id)
-    return render(response, "todolist/replace.html", {"now_todolist": now_todolist})
+    return render(response, "todolist/replace_todolist_name.html", {"now_todolist": now_todolist})
 
 def edit_todolist_name(response, list_name):
     if response.method == "POST":
