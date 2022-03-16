@@ -93,4 +93,4 @@ def update_new_item(response, list_name):
         now_todolist = ToDoLists.objects.get(user_id = response.user.id, name = list_name)
         item = Items(name = response.POST.get("new_item_name"), todolist_id = now_todolist.id)
         item.save()
-    return todolist(response, list_name)
+    return redirect(f"/todolist_{list_name}")
