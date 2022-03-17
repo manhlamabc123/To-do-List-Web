@@ -123,3 +123,25 @@ def update_item_name(response, list_name, item_id):
         item.name = response.POST.get("new_item_name")
         item.save()
     return redirect(f"/todolist_{list_name}/")
+
+def clicked_item_description(response, list_name, item_id):
+    return render(response, "todolist/replace_item_description.html", {"now_todolist_name": list_name, "item_id": item_id})
+
+def check_item_description_update(response):
+    if response.method == "POST":
+        item_description = response.POST.get("new_item_description")
+        if check_for_special_character(item_description):
+            return HttpResponse("<button id=\"change_description_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Contain special character</button>")
+        elif len(item_description) > 50:
+            return HttpResponse("<button id=\"change_description_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Too Long</button>")
+        elif len(item_description) == 0:
+            return HttpResponse("<button id=\"change_description_form\" class=\"btn btn-danger btn-sm\" type=\"submit\" disabled>Please type something</button>")
+        else:
+            return HttpResponse("<button id=\"change_description_form\" class=\"btn btn-primary btn-sm\" type=\"submit\">Save</button>")
+
+def update_item_description(response, list_name, item_id):
+    if response.method == "POST":
+        item = Items.objects.get(id = item_id)
+        item.description = response.POST.get("new_item_description")
+        item.save()
+    return redirect(f"/todolist_{list_name}/")

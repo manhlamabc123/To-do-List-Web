@@ -83,7 +83,15 @@
                                                 hx-swap="outerHTML"
                                                 >{{item.name}}</div>
                                             </form>
-                                            <div class="widget-subheading"><i>{{item.description}}</i></div>
+                                            <form>
+                                                {% csrf_token %}
+                                                <div 
+                                                class="widget-subheading" 
+                                                hx-post="/clicked_item_description_{{now_todolist.name}}_{{item.id}}/" 
+                                                hx-trigger="click" 
+                                                hx-swap="outerHTML"
+                                                ><i>{{item.description}}</i></div>
+                                            </form>
                                         </div>
                                         <div class="widget-content-right">
                                             <form>
