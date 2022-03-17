@@ -1,0 +1,22 @@
+<div class="widget-heading">
+    <form method="POST" action="/update_item_name_{{now_todolist_name}}_{{item_id}}/">
+        {% csrf_token %}
+        <div class="input-group input-group-sm">
+            <input 
+                type="text" 
+                class="form-control"  
+                name="new_item_name" 
+                hx-post="/check_item_name_update/" 
+                hx-trigger="keyup"
+                hx-target="#change_name_form"
+                hx-swap="outerHTML"
+            >
+            <button 
+            id="change_name_form" 
+            class="btn btn-danger btn-sm" 
+            type="submit" 
+            disabled
+            >Please type something</button>
+        </div>
+    </form>
+</div>

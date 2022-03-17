@@ -84,7 +84,7 @@ def check_item_name(response):
         elif len(item_name) > 30:
             return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Too long</button>")
         elif len(item_name) == 0:
-            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Add</button>")
+            return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-danger font-weight-bold\" disabled>Please type something</button>")
         else:
             return HttpResponse("<button id=\"add_item_button\" class=\"add btn btn-primary font-weight-bold\" >Add</button>")
 
@@ -101,3 +101,25 @@ def delete_item(response, list_name, item_id):
         item = Items.objects.get(id = item_id)
         item.delete()
     return render(response, "todolist/delete_item.html", {"now_todolist": now_todolist})
+
+def clicked_item_name(response, list_name, item_id):
+    return render(response, "todolist/replace_item_name.html", {"now_todolist_name": list_name, "item_id": item_id})
+
+def check_item_name_update(response):
+    if response.method == "POST":
+        item_name = response.POST.get("new_item_name")
+        if check_for_special_character(item_name):
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" disabled>Contain special character</button>")
+        elif len(item_name) > 30:
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" disabled>Too long</button>")
+        elif len(item_name) == 0:
+            return HttpResponse("<button id=\"change_name_form\" class=\"btn btn-danger btn-sm\" disabled>Please type something</button>")
+        else:
+            return HttpResponse("<button type=\"submit\" id=\"change_name_form\" class=\"btn btn-primary btn-sm\" >Add</button>")
+
+def update_item_name(response, list_name, item_id):
+    if response.method == "POST":
+        item = Items.objects.get(id = item_id)
+        item.name = response.POST.get("new_item_name")
+        item.save()
+    return redirect(f"/todolist_{list_name}/")
