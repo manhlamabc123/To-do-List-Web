@@ -1,0 +1,133 @@
+{% extends "main/base.html" %}
+{%load static%}
+
+{% block style %}
+{% endblock %}
+
+{% block title %}
+    Habit Tracking
+{% endblock %}
+
+{% block page_title %}
+    Your Habits
+{% endblock %}
+
+
+{% block sidenav %}
+    <a href="/profile">Profile</a>
+    <hr color="white">
+{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="card-hover-shadow-2x mb-3 card">
+        <div class="card-header-tab card-header">
+            <div 
+                class="card-header-title font-size-lg text-capitalize font-weight-normal"
+                hx-get="/clicked_todolist_name_{{now_todolist.name}}/"
+                hx-trigger="click"
+                hx-swap="outerHTML"
+            >
+            <i class="fa fa-tasks"></i>&nbsp;{{now_todolist.name}}
+            </div>
+        </div>
+        <div class="scroll-area-sm">
+            <perfect-scrollbar class="ps-show-limits">
+                <div style="position: static;" class="ps ps--active-y">
+                    <div id="todolist_card" class="ps-content">
+                        <ul class=" list-group list-group-flush">
+                            {% for item in now_todolist.items_set.all %}
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <form>
+                                                    {% csrf_token %}
+                                                    {% if item.complete == True %}
+                                                    <input 
+                                                    class="custom-control-input" 
+                                                    id="exampleCustomCheckbox{{item.id}}" 
+                                                    type="checkbox" 
+                                                    name="checkbox_{{item.id}}"
+                                                    checked
+                                                    hx-post="/update_check_box_{{now_todolist.name}}_{{item.id}}/" 
+                                                    hx-trigger="change"
+                                                    >
+                                                    <label class="custom-control-label" for="exampleCustomCheckbox{{item.id}}">&nbsp;</label>
+                                                    {% else %}
+                                                    <input 
+                                                    class="custom-control-input" 
+                                                    id="exampleCustomCheckbox{{item.id}}" 
+                                                    type="checkbox" 
+                                                    name="checkbox_{{item.id}}"
+                                                    hx-post="/update_check_box_{{now_todolist.name}}_{{item.id}}/" 
+                                                    hx-trigger="change"
+                                                    >
+                                                    <label class="custom-control-label" for="exampleCustomCheckbox{{item.id}}">&nbsp;</label>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <form>
+                                                {% csrf_token %}
+                                                <div 
+                                                class="widget-heading" 
+                                                hx-post="/clicked_item_name_{{now_todolist.name}}_{{item.id}}/" 
+                                                hx-trigger="click" 
+                                                hx-swap="outerHTML"
+                                                >{{item.name}}</div>
+                                            </form>
+                                            <form>
+                                                {% csrf_token %}
+                                                <div 
+                                                class="widget-subheading" 
+                                                hx-post="/clicked_item_description_{{now_todolist.name}}_{{item.id}}/" 
+                                                hx-trigger="click" 
+                                                hx-swap="outerHTML"
+                                                ><i>{{item.description}}</i></div>
+                                            </form>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <form>
+                                                {% csrf_token %}
+                                                <button 
+                                                class="border-0 btn-transition btn btn-outline-danger" 
+                                                hx-post="/delete_item_{{now_todolist.name}}_{{item.id}}/" 
+                                                hx-trigger="click" 
+                                                hx-target="#todolist_card" 
+                                                hx-swap="outerHTML"
+                                                > <i class="fa fa-trash"></i> </button> 
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+        <div class="d-flex text-right card-footer justify-content-end">
+            <form method="POST" class="form-inline" action="/update_new_item_{{now_todolist.name}}/">
+                {% csrf_token %}
+                <div class="form_group">
+                    <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="New item"
+                    name="new_item_name"
+                    hx-post="/check_item_name/"
+                    hx-trigger="keyup"
+                    hx-target="#add_item_button"
+                    hx-swap="outerHTML"
+                    >
+                    <button type="submit" id="add_item_button" class="add btn btn-danger font-weight-bold" disabled>Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

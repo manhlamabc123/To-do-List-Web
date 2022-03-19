@@ -1,0 +1,19 @@
+<div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+    <i class="fa fa-tasks"></i>&nbsp;
+    <form method="POST" action="/edit_todolist_name_{{now_todolist.name}}/">
+        {% csrf_token %}
+        <div class="input-group input-group-sm">
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="New name" 
+                name="new_name" 
+                hx-post="/check_todolist_name/" 
+                hx-trigger="keyup"
+                hx-target="#change_name_form"
+                hx-swap="outerHTML"
+            >
+            <button id="change_name_form" class="btn btn-danger btn-sm" type="submit" disabled>Please type something</button>
+        </div>
+    </form>
+</div>
