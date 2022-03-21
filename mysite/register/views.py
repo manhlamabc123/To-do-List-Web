@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.template import RequestContext
 from register.forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm
+from todolist.models import ToDoLists
 # Create your views here.
 
 def register_request(request):
@@ -14,7 +15,7 @@ def register_request(request):
             login(request, user)
             messages.success(request, "Registered successfully!")
             return redirect('/login')
-        messages.error(request, "Registerd failed!")
+        messages.error(request, "Registered failed!")
     form = NewUserForm()
     return render(request, 'main/register.html', {"register_form":form})
     
@@ -25,6 +26,8 @@ def login_request(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username = username, password = password)
+            list = ToDoLists(name = ToDoLists.ListNameGenerator(request), user_id = user.id)
+            list.save()
             if user is not None:
                 login(request, user)
                 return redirect('/')
