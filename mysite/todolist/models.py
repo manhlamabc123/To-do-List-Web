@@ -24,17 +24,19 @@ class ToDoLists(models.Model):
         return False
 
     @staticmethod
-    def ListNameGenerator(response):
+    def ListNameGenerator(response, first_time=False):
         user_todolist = list(ToDoLists.objects.filter(user_id = response.user.id))
         if len(user_todolist) >= 5:
             messages.error(response, f"You already have 5 To-do Lists. You cannot have more.")
             return None
-        new_list_name = f"NewList{len(user_todolist) + 1}"
+        all_todolist = list(ToDoLists.objects.filter())
+        new_list_name = f"NewList{len(all_todolist) + 1}"
         if ToDoLists.IsExistedTodolist(response.user.id, new_list_name):
             messages.error(response, f"Cannot create to-do list because {new_list_name} is already existed.")
             return None
         else:
-            messages.success(response, f"{new_list_name} is created successfully! Please change your list's name.")
+            if not first_time:
+                messages.success(response, f"{new_list_name} is created successfully! Please change your list's name.")
             return new_list_name
 
     @staticmethod

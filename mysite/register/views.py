@@ -12,6 +12,8 @@ def register_request(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            list = ToDoLists(name = ToDoLists.ListNameGenerator(request, True), user_id = user.id)
+            list.save()
             login(request, user)
             messages.success(request, "Registered successfully!")
             return redirect('/login')
@@ -26,8 +28,6 @@ def login_request(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username = username, password = password)
-            list = ToDoLists(name = ToDoLists.ListNameGenerator(request), user_id = user.id)
-            list.save()
             if user is not None:
                 login(request, user)
                 return redirect('/')

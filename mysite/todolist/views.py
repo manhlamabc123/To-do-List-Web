@@ -49,7 +49,7 @@ def edit_todolist_name(response, list_name):
     return redirect(f"/todolist_{new_name}/")
 
 def check_for_special_character(string): 
-    special_character = ['~', ':', "'", '+', '[', '\\', '@', '^', '{', '%', '(', '-', '"', '*', '|', ',', '&', '<', '`', '}', '.', '_', '=', ']', '!', '>', ';', '?', '#', '$', ')', '/']
+    special_character = ['~', '+', '[', '\\', '@', '^', '{', '%', '(', '-', '"', '*', '|', ',', '&', '<', '`', '}', '_', '=', ']', '>', ';', '?', '#', '$', ')', '/']
     return any(ext in string for ext in special_character)
 
 def check_todolist_name(response):
