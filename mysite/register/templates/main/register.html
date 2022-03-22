@@ -1,19 +1,14 @@
-
-
+{% extends "main/base.html" %}
 
 {%load static%}
    
 {%block content%}
 {% load crispy_forms_tags %}
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
 
 <!--Login--> 
 <div class="register">
 
   <h2 class="login-header">Register</h2>
-
 
   <form method="POST" class="register-container">
     {% csrf_token %}
