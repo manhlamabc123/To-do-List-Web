@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from django.template import RequestContext
-from register.forms import NewUserForm, UpdateUserForm
+from django.urls import reverse_lazy
+from register.forms import NewUserForm, UpdateUserForm, PasswordChangingForm
 from django.contrib.auth.forms import AuthenticationForm
 from todolist.models import ToDoLists
+from django.contrib.auth.views import PasswordChangeView
 # Create your views here.
 
 def register_request(request):
@@ -61,3 +62,7 @@ def edit_profile(response):
         else:
             messages.error(response, 'Error! Please check your input again.')
             return redirect("edit_profile")
+
+class PasswordsChangeView(PasswordChangeView):
+	form_class = PasswordChangingForm
+	success_url = reverse_lazy('profile')
