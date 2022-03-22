@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.template import RequestContext
-from register.forms import NewUserForm
+from register.forms import NewUserForm, UpdateUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from todolist.models import ToDoLists
 # Create your views here.
@@ -46,3 +46,18 @@ def logout_request(request):
 def profile(response):
     user = response.user
     return render(response, "register/profile.html", {"user": user})
+
+def edit_profile(response):
+    if response.method == "GET":
+        user_form = UpdateUserForm(instance=response.user)
+        return render(response, "register/edit_profile.html", {"form": user_form})
+    else:
+        user_form = UpdateUserForm(response.POST, instance=response.user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(response, 'Your profile is updated successfully')
+            return redirect("profile")
+        else:
+            messages.error(response, 'Error! Please check your input again.')
+            return redirect("edit_profile")
