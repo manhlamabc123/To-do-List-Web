@@ -1,6 +1,14 @@
 {% extends "main/base.html" %}
 
 {%load static%}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block page_title %}
+    Login
+{% endblock %}
    
 {%block content%}
 {% load crispy_forms_tags %}
@@ -8,9 +16,6 @@
 <!--Login--> 
 <div class="login">
   <div class="login-triangle"></div>
-
-  <h2 class="login-header">Log in</h2>
-
 
   <form method="POST" class="login-container">
     {% csrf_token %}
