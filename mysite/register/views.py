@@ -42,3 +42,7 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect('/login')
+
+def profile(response):
+    user = response.user
+    return render(response, "register/profile.html", {"user": user})
